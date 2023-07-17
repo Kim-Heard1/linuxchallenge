@@ -1,0 +1,22 @@
+#!/bin/bash
+
+yourName="Kim"
+filePrefix="${yourName}"
+startNumber=1
+
+# Find the maximum number of files that already exist
+maxNumber=$(find . -maxdepth 1 -name "${filePrefix}*" | awk -F"${filePrefix}" '{print $2}' | sort -n | tail -n 1)
+
+#Determine start and end numbers for files
+if [[ -n "$maxNumber" ]]; then
+    startNumber=$((maxNumber + 1))
+fi
+
+endNumber=$((startNumber + 24))
+
+#Create files
+for ((i = startNumber; i <= endNumber; i++))
+do
+    fileName="${filePrefix}${i}"
+    touch "$fileName"
+done
